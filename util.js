@@ -49,10 +49,3 @@ function minutesLater(date, minutes){
   later.setMinutes(date.getMinutes() + minutes)
   return later
 }
-
-function daysBefore(date, days){
-  date = new Date(date)
-  var before = new Date(date)
-  before.setDate(date.getDate() - days)
-  return before
-}
