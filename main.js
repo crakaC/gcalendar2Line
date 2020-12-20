@@ -24,7 +24,7 @@ function mainTask() {
  * @param {CalendarApp.Calendar} calendar
  */
 function sendNotification(calendar){
-  let events = calendar.getEventsForDay(new Date())
+  let events = calendar.getEvents(new Date(), getRelativeDate(1, 0))
   let msg = events.filter(isNearEvent).map(formatEvent).join("\n\n")
   if(msg){
     Logger.log(`msg => ${msg}`)
