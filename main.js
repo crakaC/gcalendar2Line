@@ -3,7 +3,6 @@ const NOTIFICATION_HEADER = "🔥次の予定が近づいています🔥"
 
 const SENT_EVENTS = "sentEvents"
 let sentEvents = []
-
 /**
  * 通知送信済みのEventIDを削除する
  * 送信済みEventIDはPropertyに保存してあるため長期間は保持できない。(9kbyte制限)
@@ -53,8 +52,8 @@ function removeFromSentEvents(id){
  */
 function sendNotification(calendar){
   let now = new Date()
-  let events = calendar.getEvents(new Date(), minutesLater(now, NOTIFY_BEFORE_MINUTES))
-  let msg = events.filter(isNearEvent).map(formatEvent).join("\n\n")
+  let events = calendar.getEvents(now, minutesLater(now, NOTIFY_BEFORE_MINUTES))
+  let msg = events.filter((e) => isNearEvent(e, now)).map(formatEvent).join("\n\n")
   if(msg){
     Logger.log(`msg => ${msg}`)
     sendLineNotificatoin(`${NOTIFICATION_HEADER}\n${msg}`)
@@ -80,10 +79,10 @@ function deleteFinishedEvents(calendar){
 
 /**
  * @param {CalendarApp.CalendarEvent} event
+ * @param {Date} now
  * @return {bool}
  */
-function isNearEvent(event){
-  let now = new Date()
+function isNearEvent(event, now){
   let start = new Date(event.getStartTime())
   let limit = minutesLater(now, NOTIFY_BEFORE_MINUTES)
   let inTime = now < start && start < limit
