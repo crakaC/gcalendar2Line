@@ -1,15 +1,15 @@
 function sendLineNotificatoin(msg){
-  var accessToken = getProperty('LINE_TOKEN')
-  var options = {    
+  let token = getProperty('LINE_TOKEN')
+  let options = {    
     method: 'post',
-    payload : 'message=' + msg,
-    headers: {'Authorization' : 'Bearer '+ accessToken},
-    muteHttpExceptions:true
+    payload: 'message=' + msg,
+    headers: {'Authorization' : 'Bearer '+ token},
+    muteHttpExceptions: true
   }
-  UrlFetchApp.fetch('https://notify-api.line.me/api/notify',options)
+  UrlFetchApp.fetch('https://notify-api.line.me/api/notify', options)
 }
 
-var properties = PropertiesService.getScriptProperties()
+let properties = PropertiesService.getScriptProperties()
 function getProperty(key){
   return properties.getProperty(key)
 }
@@ -34,7 +34,7 @@ function deleteProperty(key){
  * @return {Date} The new date.
  */
 function getRelativeDate(daysOffset, hour) {
-  var date = new Date();
+  let date = new Date();
   date.setDate(date.getDate() + daysOffset);
   date.setHours(hour);
   date.setMinutes(0);
@@ -45,7 +45,7 @@ function getRelativeDate(daysOffset, hour) {
 
 function minutesLater(date, minutes){
   date = new Date(date)
-  var later = new Date(date)
+  let later = new Date(date)
   later.setMinutes(date.getMinutes() + minutes)
   return later
 }
